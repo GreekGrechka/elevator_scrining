@@ -1,6 +1,14 @@
 from numpy import *
 from flask import *
 from graphs import graph_1, graph_2, create_graph1, create_graph2
+import threading
+import asyncio
+from data_generate import generate_data
+def run_asyncio_task():
+    asyncio.run(generate_data())
+
+
+
 
 create_graph1()
 create_graph2()
@@ -25,3 +33,6 @@ def index():
 # Открытие приложения +
 if __name__ == '__main__':
     app.run(debug=True)
+
+thread = threading.Thread(target=run_asyncio_task)
+thread.start()

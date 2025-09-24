@@ -2,14 +2,18 @@
 from random import *
 from time import *
 from datetime import *
-with open('data/file_2.txt', 'w') as file:
-    for i in range(10):
-        now = datetime.now()
-        now = now.strftime("%d.%m.%Y %H:%M:%S")
-        sound = str(randint(20, 100))
-        vibrations = str(randint(10, 1100))
-        s = [sound, vibrations, now]
-        s = ' '.join(s)
-        s += '\n'
-        file.write(s)
-        sleep(1)
+import aiofiles
+import asyncio
+async def generate_data(): 
+    async with aiofiles.open('data/file_2.txt', 'a') as file:
+        while True:
+            sound = str(randint(20, 100))
+            vibrations = str(randint(10, 1100))
+            s = [sound, vibrations, str(time())]
+            s = ' '.join(s)
+            s += '\n'
+            await file.write(s)
+            await asyncio.sleep(1)
+            
+
+
